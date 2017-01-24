@@ -1,0 +1,29 @@
+<script>
+  $( function() {
+    $( "#company" ).autocomplete({
+    	source: "/admin/company.json?model_name=company&f[name][31922][o]=like&f[name][31922][v]="+$( "#company" ).val(),
+      	select: function( event, ui ) {
+        	log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+      	}
+      // source: function(request, response){
+	     //  	$.ajax({
+		    //   url: ',
+		    //   success: function(data) {
+		    //      response(data);
+		    //   }
+		    // });
+      // }
+    });
+  } );
+  </script>
+<h1>Home#index</h1>
+
+
+
+<div class="ui-widget">
+  <label for="company"> Hotel: </label>
+     <input id="company">
+   </div>
+</div>
+
+http://localhost:3000/admin/company.json?model_name=company&f[name][31922][o]=like&f[name][31922][v]=aar&query=
