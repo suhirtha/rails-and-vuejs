@@ -1,2 +1,0 @@
-class CitiesArea < ApplicationRecord
-end

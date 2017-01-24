@@ -1,18 +1,15 @@
 class HomeController < ApplicationController
-  autocomplete :city, :name
-  autocomplete :company, :name
   def index
-  	@company = Company.select("companies.name")
   	respond_to do |format|
       format.html
-      format.json { render :json => @company }
+      format.json { 
+        if params["column"] == "city"
+          render :json => City.where("name like ?","%#{params[:term]}%").pluck(:name)
+        else
+          city = City.where(:name => params[:city]).first
+          render :json => city.companies.where("companies.name like ?","%#{params[:term]}%").pluck(:name).uniq
+        end
+      }
     end
   end
-  def edit
-  	@etc = params[:data]
-  	#@etc = Company.joins([{types: :rates}],:cities,:areas).where("company_id = ?", params[:data])
-  	@all = Company.joins([{types: :rates}],:cities,:areas).distinct.select("rates.room as room,rates.price as price,types.name as type,companies.name as hotel,cities.name as city,areas.name as area")
-	puts (@etc.inspect)  
-  end
-
 end
