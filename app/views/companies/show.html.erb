@@ -1,0 +1,15 @@
+<% @area.each do |t|%>
+<p>
+  <strong>Hotel:</strong>
+  <%= @company.name %>
+</p>
+<p>
+  <strong>Area:</strong>
+  <%= t.name %>
+</p>
+<p>
+  <strong>City:</strong>
+  <%= t.city.name %>
+</p>
+<%= link_to 'Edit', edit_company_path(@company.id) %>
+<% end %>

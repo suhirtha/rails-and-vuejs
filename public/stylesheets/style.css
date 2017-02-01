@@ -1,0 +1,13 @@
+body {
+   font-family: Helvetica, Geneva, Arial, sans-serif;
+   font-size: small;
+   font-color: red;
+   background-color: #fff;
+}
+
+#header {
+   text-align: center;
+   padding-bottom: 15px;
+   color:red;
+}
+

@@ -12,42 +12,42 @@
 
 ActiveRecord::Schema.define(version: 20170123062532) do
 
-  create_table "areas", force: :cascade do |t|
+  create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "areas_companies", id: false, force: :cascade do |t|
+  create_table "areas_companies", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "area_id",    null: false
     t.integer "company_id", null: false
-    t.index ["area_id", "company_id"], name: "index_areas_companies_on_area_id_and_company_id"
-    t.index ["company_id", "area_id"], name: "index_areas_companies_on_company_id_and_area_id"
+    t.index ["area_id", "company_id"], name: "index_areas_companies_on_area_id_and_company_id", using: :btree
+    t.index ["company_id", "area_id"], name: "index_areas_companies_on_company_id_and_area_id", using: :btree
   end
 
-  create_table "cities", force: :cascade do |t|
+  create_table "cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "companies", force: :cascade do |t|
+  create_table "companies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "rates", force: :cascade do |t|
+  create_table "rates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "room"
-    t.decimal  "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.decimal  "price",      precision: 10
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "company_id"
     t.integer  "type_id"
   end
 
-  create_table "types", force: :cascade do |t|
+  create_table "types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,15 +1,23 @@
 $(document).ready(function() {
     $("#city").autocomplete({
-        source: "/home.json?column=city",
+        source: "/companies.json?column=city",
         minLength: 2,
         select: function(event, ui) {
+            console.log(ui)
             $("#company").autocomplete({
-                source: "/home.json?column=hotel&city=" + ui.item.value,
+                source: "/companies.json?column=hotel&city=" + ui.item.value,
                 minLength: 2,
                 select: function(event, ui) {
                     console.log(ui)
+                    $('#btn').click(function(){
+                        location.href = "/companies/"+ui.item.id+"/edit"
+
+                    });
                 }
             });
         }
     });
+     $('#btn2').click(function(){
+        location.href = "/companies";
+        });
 });

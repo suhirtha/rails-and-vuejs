@@ -1,0 +1,30 @@
+body {
+   font-family: Helvetica, Geneva, Arial, sans-serif; 
+   text-align: center;
+}
+
+.form{
+	height: 250px;
+	width: 350px;
+	background-color: rgba(153, 255, 51,0.8);
+	border-radius: 25%;
+	margin: 0 auto;
+	padding: 10px;
+}
+.form label{
+	color:#3a3a3a;
+	padding-bottom: 1em;
+}
+.container{
+	background-color: rgba(153, 255, 51,0.8);
+	padding: 3em;
+	border:1px solid #3a3a3a;
+	margin-top: 2em;
+}
+.row{
+	padding-bottom: 1em;
+}
+.row input{
+width :50%;	
+text-align: center;
+}

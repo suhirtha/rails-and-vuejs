@@ -1,0 +1,54 @@
+<div class="container">
+<h1><small><u>Edit Details</u></small></h1>
+<%= form_for (@company) do |f| %>
+  <div class="row">
+  <div class="col-md-12">
+    <%= f.label :hotel_name %><br>
+    <%= f.text_field :name %>    
+  </div>
+  </div>
+<% end %>
+
+ <% @company.rates.each do |rate|%>
+  <%= fields_for rate do |t| %>
+    <div class="row">
+      <div class="col-md-4">
+        <%= t.label :room %><br>
+        <%= t.text_field :room %>      
+      </div>
+
+    <div class="col-md-4">
+      <%= t.label :price %><br>
+      <%= t.text_field :price %>
+    </div>
+      
+  <%= fields_for (rate.type) do |t| %>
+      <div class="col-md-4">
+        <%= t.label :type %><br>
+        <%= t.text_field :name %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<% end %>
+
+
+<% @company.areas.each do |area| %>
+  <%= fields_for area do |a| %>
+  <div class="row">
+     <div class="col-md-6">
+      <%= a.label :area %><br>
+      <%= a.text_field :name %>
+    </div>
+
+    <%= fields_for (area.city) do |c| %>
+    <div class="col-md-6">
+      <%= c.label :city %><br>
+      <%= c.text_field :name %>
+    </div>
+  </div>
+  <% end %>
+  <% end %>
+<% end %>
+<div><button class="btn btn-info" id="btn2">Done</button></div>
+</div>
