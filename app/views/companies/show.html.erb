@@ -1,15 +1,24 @@
-<% @area.each do |t|%>
-<p>
-  <strong>Hotel:</strong>
-  <%= @company.name %>
-</p>
-<p>
-  <strong>Area:</strong>
-  <%= t.name %>
-</p>
-<p>
-  <strong>City:</strong>
-  <%= t.city.name %>
-</p>
-<%= link_to 'Edit', edit_company_path(@company.id) %>
+<h4><%= params[:notice] %></h4>
+<% @areas.each do |t|%>
+<table class="table">
+	<tr>
+		<td> <strong>Hotel:</strong> </td>
+		<td> <%= @company.name %> </td>
+	</tr>
+  	<tr>
+		<td> <strong>Area:</strong> </td>
+		<td> <%= t.name %> </td>
+	</tr>
+	<tr>
+		<td> <strong>City:</strong> </td>
+		<td>  <%= t.city.name %> </td>
+	</tr>
+	<tr>
+		<td> <%= link_to 'Edit', edit_company_path(:id => @company.id, :area_id => t.id) %> </td>
+		<td> 
+		<%= link_to "Delete", company_path(:id => @company.id, :area_id => t.id), :method => :delete%>
+ 		</td>
+	</tr>
+</table>
+
 <% end %>

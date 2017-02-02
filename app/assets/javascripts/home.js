@@ -10,7 +10,7 @@ $(document).ready(function() {
                 select: function(event, ui) {
                     console.log(ui)
                     $('#btn').click(function(){
-                        location.href = "/companies/"+ui.item.id+"/edit"
+                        location.href = "/companies/"+ui.item.id
 
                     });
                 }

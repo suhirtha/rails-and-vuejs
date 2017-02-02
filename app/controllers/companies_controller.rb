@@ -16,9 +16,30 @@ class CompaniesController < ApplicationController
   end
   def show
     @company = Company.includes(:cities).find(params[:id])
-    @area = Company.includes(:cities).find(params[:id]).areas
+    @areas = Company.includes(:cities).find(params[:id]).areas
   end
   def edit
     @company = Company.includes(:cities).find(params[:id])
+    @path = params[:area_id]
+  end
+  def update
+    @update = 'Successfully Updated'
+    @company = Company.includes(:cities).find(params[:id])
+    if @company.update(company_param)
+    redirect_to :action => 'show', :id => @company, :notice => @update
+    end
+  end 
+  def destroy
+    area = Company.find(params[:id]).areas.find(params[:area_id])
+    Company.find(params[:id]).areas.delete(area)
+    redirect_to :action => 'index', :notice => 'Successfully Deleted'
+  end
+  def company_param
+   params.require(:company).permit(
+    :name,
+    areas_attributes: [ :name],
+    cities_attributes: [:name],
+    rates_attributes: [:room, :price],
+    types_attributes: [:name])
   end
 end
