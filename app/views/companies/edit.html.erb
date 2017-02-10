@@ -15,7 +15,7 @@
       {{company}}
     </div>
 
-    <button v-if="editCompany" @click="editCompany = false" v-click="">Update</button>
+    <button v-if="editCompany" v-on:click="update()">Update</button>
     <button v-else @click="editCompany = true">Edit</button>
     <button>Delete</button>
 
@@ -61,7 +61,7 @@
        {{room.type.name}}
      </div>           
    </div>          
-   <button v-if="editRoom" @click="editRoom = false">Update</button> 
+   <button v-if="editRoom" v-on:click="update()">Update</button> 
    <button v-else @click="editRoom = true">Edit</button>
    <button>Delete</button>
  </div>

@@ -18,3 +18,10 @@
 //= require vue-router
 //= require vue-resource
 //= require_tree .
+
+
+var authtoken = "asdsa";
+
+$(document).ready(function(){
+  authtoken = $('meta[name=csrf-token]').attr('content');
+})

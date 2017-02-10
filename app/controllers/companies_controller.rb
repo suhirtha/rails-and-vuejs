@@ -38,14 +38,20 @@ class CompaniesController < ApplicationController
      }
     end
   end
+
   def edit
     @company = Company.includes(:cities,:areas,:types,:rates).find(params[:id])
   end
   def update
     @company = Company.includes(:cities).find(params[:id])
-    if @company.update(company_param)
-    redirect_to :action => 'show', :id => @company, :notice => 'Successfully Updated'
+    @company.update(company_param)
+    # @company.rates.delete_all
+    
+    company_param["rates_attributes"].each do |rate|
+      Rate.find(rate["id"]).update(:room =>  rate["room"], :price => rate["price"])
     end
+
+    redirect_to :action => 'show', :id => @company, :notice => 'Successfully Updated'
   end 
   def destroy
     area = Company.find(params[:id]).areas.find(params[:area_id])
@@ -60,7 +66,7 @@ class CompaniesController < ApplicationController
     :name,
     areas_attributes: [ :name],
     cities_attributes: [:name],
-    rates_attributes: [:room, :price],
+    rates_attributes: [:id,:room, :price],
     types_attributes: [:name])
   end
 end

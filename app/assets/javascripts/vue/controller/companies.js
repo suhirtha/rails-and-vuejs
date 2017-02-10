@@ -1,7 +1,7 @@
 var vm = new Vue({
   el: '#company',
   data: {
-    company: [],
+    company: {},
     rooms: [],
     areas: [],
     types: [],
@@ -11,6 +11,23 @@ var vm = new Vue({
     editArea: true,
     editCompany: true,
   },
+  methods: {
+    update: function(){
+      company = {
+        "name": this.company,
+        "rates_attributes": this.rooms
+      }
+      this.$http.put('/companies/'+company_id, {
+        authenticity_token: authtoken,
+        company: company
+      }, function (data, status, request) {
+        this.editCompany = false
+        this.editRoom = false
+        console.log(data)
+      });
+    }
+  },
+
   created: function() {
     var that;
     console.log(this);
@@ -28,9 +45,7 @@ var vm = new Vue({
         for(var i = 0; i< data["areas_list"].length; i++){
           that.cityarea[i] = data["areas_list"][i]["name"];
         }
-        
       }
-
     });
   }
 });
