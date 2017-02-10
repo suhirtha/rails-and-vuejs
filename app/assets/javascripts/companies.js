@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     $("#city").autocomplete({
         source: "/companies.json?column=city",
@@ -19,5 +20,6 @@ $(document).ready(function() {
     });
      $('#btn2').click(function(){
         location.href = "/companies";
-        });
+        })
+
 });

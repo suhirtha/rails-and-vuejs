@@ -1,56 +1,174 @@
 <div class="container">
-<h1><small><u>Edit Details</u></small></h1>
-<%= form_for (@company),:url =>{:action => "update", :id =>@company.id} do |f| %>
+  <h1><small><u>Edit <%= @company.name %> Details</u></small></h1>
   <div class="row">
-  <div class="col-md-12">
-    <%= f.label :hotel_name %><br>
-    <%= f.text_field :name %>    
-  </div>
+    <div class="col-md-6">
+      <%= form_for (@company),:url =>{:action => "update", :id =>@company.id} do |f| %>
+      <label for = "hotel">Hotel Name</label>:
+      <%= f.text_field :name %>    
+    </div>
   </div>
 
-
- <% @company.rates.each do |rate|%>
-  <%= f.fields_for rate do |t| %>
+  <div class="row">
+    <div class="col-md-5">
+      <h3>Hotel Room Details:</h3>
+    </div>
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-4">
+         <label for = "room">Rooms</label>:  
+       </div>
+       <div class="col-md-4">
+        <label for = "price">Price</label>:
+      </div>
+      <div class="col-md-4">
+        <label for = "type">Type</label>:
+      </div>
+    </div>
+    <% @company.rates.each do |rate|%>
+    <%= f.fields_for rate do |t| %>
     <div class="row">
       <div class="col-md-4">
-        <%= t.label :room %><br>
-        <%= t.text_field :room %>      
+        <%= t.text_field :room %> 
       </div>
-
-    <div class="col-md-4">
-      <%= t.label :price %><br>
-      <%= t.text_field :price %>
-    </div>
-      
-  <%= f.fields_for (rate.type) do |t| %>
       <div class="col-md-4">
-        <%= t.label :type %><br>
-        <%= t.text_field :name %>
+        <%= t.text_field :price %>
+      </div>
+      <%= f.fields_for (rate.type) do |t| %>
+      <div class="col-md-4">
+        <%=t.collection_select :id, Type.all, :id, :name %>
       </div>
     </div>
-  <% end %>
-<% end %>
-<% end %>
-
-
-  <%= f.fields_for @company.areas.find(@path) do |a| %>
-  <div class="row">
-     <div class="col-md-6">
-      <%= a.label :area %><br>
-      <%= a.text_field :name %>
-    </div>
-
-    <%= f.fields_for (@company.areas.find(@path).city) do |c| %>
-    <div class="col-md-6">
-      <%= c.label :city %><br>
-      <%= c.text_field :name %>
-    </div>
+    <% end %>
+    <% end %>
+    <% end %>
   </div>
-  <% end %>
-  <% end %>
-
-  <div>
-    <%= f.submit "Save changes" %>
-  </div>
-<% end %>
 </div>
+
+<% @company.areas.each do |area|%>
+<%= f.fields_for (area.city) do |a| %>
+<div class="row">
+ <div class="col-md-6">
+  <%= a.label :city %>
+  <%= a.text_field :name %>
+</div>
+</div>
+<% end %>
+<%= f.fields_for (area) do |c| %>
+<div class="row"> 
+  <div class="col-md-6"> 
+    <%= c.label :area %>
+    <%= c.text_field :name %>
+    <%= link_to "X", company_path(:id => @company.id, :area_id => area), :method => :delete%>
+  </div>
+</div> 
+
+<% end %>
+<% end %>
+<%= form_tag :action => 'create' do %>
+
+<p><label for = "areas">New Area</label>:
+  <%= collection_select(:company,:area_ids, Area.all,:id,:name, prompt: true) %>
+  <%= submit_tag "+" %></p>
+
+
+  <% end %>
+
+  <%= f.submit "Save changes" %>
+  <% end %>
+</div>
+
+
+<!--Vue js starts from here-->
+<script> var company_id = <%= @company.id %> </script>
+
+<div class="container" id="app">
+  <h1><small><u>Edit <%= @company.name %> Details</u></small></h1>
+  <div class="row">
+    <div class="col-md-6" v-if="editCompany">
+      <label for = "hotel">Hotel Name</label>:
+      <input type="text" v-model="company">
+    </div>
+    <div class="col-md-6" v-else>
+      <label for = "hotel">Hotel Name</label>:
+      {{company}}
+    </div>
+    <button v-if="editCompany" @click="editCompany = false">Update</button>
+    <button v-else @click="editCompany = true">Edit</button>
+    <button>Delete</button>
+  </div>
+  <div class="row">
+    <div class="col-md-4" >
+      <h3>Hotel Room Details:</h3>
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-3">
+         <label for = "room">Rooms</label>:  
+       </div>
+       <div class="col-md-3">
+        <label for = "price">Price</label>
+      </div>
+      <div class="col-md-3">
+        <label for = "type">Type</label>:
+      </div>
+    </div>
+    <div class="row" v-for="room in rooms">
+      <div class="col-md-3" v-if="editRoom">
+       <input type="text" v-model="room.room">
+     </div>
+     <div class="col-md-3" v-else>
+       {{room.room}}
+     </div>
+     <div class="col-md-3" v-if="editRoom">
+       <label>&#8377;</label><input type="text" v-model="room.price">
+     </div>
+     <div class="col-md-3" v-else>
+       <p>&#8377;{{room.price}}
+       </div>          
+       <div class="col-md-3" v-if="editRoom">
+
+        <select v-model="room.type.name">
+          <option v-for="type in types" v-bind:value="type.name">
+            {{ type.name }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-3" v-else>
+       {{room.type.name}}
+     </div>           
+   </div>          
+   <button v-if="editRoom" @click="editRoom = false">Update</button> 
+   <button v-else @click="editRoom = true">Edit</button>
+   <button>Delete</button>
+ </div>
+
+<div v-for="area in areas">
+  <div class="row">
+   <div class="col-md-6 ui-widget" v-if="editArea">
+     <label for = "city1">City</label>:
+     <city-item v-bind:a="area.city" :b="cities"></city-item>
+   </div>
+   <div class="col-md-6" v-else>
+    <label for = "city">City</label>:
+    {{area.city.name}}
+  </div> 
+</div>
+<div class="row">
+ <div class="col-md-6 ui-widget" v-if="editArea">
+  <label for = "area">Area</label>: 
+  <area-item v-bind:a="area" :cityareas="cityarea"></area-item>
+</div>
+ <div class="col-md-6" v-else>
+    <label for = "area">Area</label>: 
+    {{area.name}}
+  </div>
+</div>
+</div>
+<div class="row">
+  <button v-if="editArea" @click="editArea = false">Update</button>
+  <button v-else @click="editArea = true">Edit</button>
+  <button>Delete</button>
+</div>
+</div>
+</div>
+

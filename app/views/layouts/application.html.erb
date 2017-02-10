@@ -3,16 +3,11 @@
   <head>
     <title>Hotel</title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-   <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
-    <%= stylesheet_link_tag 'boot' %>
-    <%= stylesheet_link_tag 'auto' %>
-    <%= stylesheet_link_tag 'style' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
   </head>
 
   <body>
     <%= yield %>
+    <%= javascript_include_tag 'application' %>
   </body>
 </html>

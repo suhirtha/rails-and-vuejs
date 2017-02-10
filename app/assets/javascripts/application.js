@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery-ui/autocomplete
-//= require autocomplete-rails
-//= require turbolinks
+//= require vue
+//= require vue-router
+//= require vue-resource
 //= require_tree .

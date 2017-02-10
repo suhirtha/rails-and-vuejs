@@ -1,24 +1,36 @@
 <h4><%= params[:notice] %></h4>
-<% @areas.each do |t|%>
 <table class="table">
 	<tr>
 		<td> <strong>Hotel:</strong> </td>
 		<td> <%= @company.name %> </td>
 	</tr>
-  	<tr>
-		<td> <strong>Area:</strong> </td>
-		<td> <%= t.name %> </td>
+	<% @company.rates.each do |rate| %>
+	<tr>
+		<td> <strong>Rooms:</strong> </td>
+		<td> <%= rate.room %> </td>
 	</tr>
 	<tr>
-		<td> <strong>City:</strong> </td>
-		<td>  <%= t.city.name %> </td>
+		<td> <strong>Price:</strong> </td>
+		<td> <%= rate.price %> </td>
 	</tr>
-	<tr>
-		<td> <%= link_to 'Edit', edit_company_path(:id => @company.id, :area_id => t.id) %> </td>
-		<td> 
-		<%= link_to "Delete", company_path(:id => @company.id, :area_id => t.id), :method => :delete%>
- 		</td>
-	</tr>
+			<tr>
+				<td> <strong>Type:</strong> </td>
+				<td> <%= rate.type.name %> </td>
+			</tr>			
+	<% end %>
+		<% @company.areas.each do |t|%>
+			<tr>  	
+			<td> <strong>Area:</strong> </td>
+			<td> <%= t.name %> , <%= t.city.name %> </td>
+			</tr>
+		<tr>
+		<% end %>
+			<td> <%= link_to 'Edit', edit_company_path(:id => @company.id) %> </td>
+			<td> 
+				<%= link_to "Delete", company_path(:id => @company.id), :method => :delete%>
+		 	</td>
+	 	</tr>
+	 			
 </table>
 
-<% end %>
+
